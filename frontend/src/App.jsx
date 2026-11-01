@@ -40,6 +40,8 @@ import {
   Paperclip
 } from 'lucide-react'
 import './App.css'
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
 // =========================================================================
 // MASCOT COMPONENT (Matching Reference Hero)
@@ -469,7 +471,7 @@ export default function App() {
 
   const fetchDocuments = async () => {
     try {
-      const res = await fetch('/api/documents')
+      const res = await fetch(`${API_BASE_URL}/api/documents`)
       if (res.ok) {
         const data = await res.json()
         setUploadedDocs(data.documents || [])
@@ -502,7 +504,7 @@ export default function App() {
     formData.append('file', file)
 
     try {
-      const res = await fetch('/api/upload', {
+      const res = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       })
@@ -531,7 +533,7 @@ export default function App() {
 
   const handleDeleteDocument = async (filename) => {
     try {
-      const res = await fetch(`/api/documents/${encodeURIComponent(filename)}`, {
+      const res = await fetch(`${API_BASE_URL}/api/documents/${encodeURIComponent(filename)}`, {
         method: 'DELETE',
       })
       if (res.ok) {
@@ -584,7 +586,7 @@ export default function App() {
     setLoading(true)
 
     try {
-      const response = await fetch('/api/research', {
+      const response = await fetch(`${API_BASE_URL}/api/research`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -665,9 +667,7 @@ export default function App() {
 
       const form = document.createElement('form')
       form.method = 'POST'
-      form.action = 'http://localhost:8000/api/export-pdf-download'
-      const API_BASE_URL =
-        import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+      form.action = `${API_BASE_URL}/api/export-pdf-download`
       form.target = 'pdf-native-download-iframe'
       form.style.display = 'none'
 
