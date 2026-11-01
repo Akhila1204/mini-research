@@ -666,6 +666,8 @@ export default function App() {
       const form = document.createElement('form')
       form.method = 'POST'
       form.action = 'http://localhost:8000/api/export-pdf-download'
+      const API_BASE_URL =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
       form.target = 'pdf-native-download-iframe'
       form.style.display = 'none'
 
